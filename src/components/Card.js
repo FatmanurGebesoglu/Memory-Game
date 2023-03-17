@@ -1,10 +1,15 @@
 import './Card.css'
-const Kart = ({ kart }) => {
+const Kart = ({ kart, kartSec , donus}) => {
+
+    const kartTiklandi=()=>{
+        kartSec(kart)
+    }
+
     return (
         <div className='card' key={kart.id}>
-            <div>
+            <div className={donus ? "flipped ":"" } >
                 <img className='front' src={kart.src} alt="kart ön yüz" />
-                <img className='back' src="/img/box.png" alt="kart ön yüz" />
+                <img className='back' src="/img/box.png" alt="kart ön yüz" onClick={kartTiklandi} />
             </div>
         </div>
     );
