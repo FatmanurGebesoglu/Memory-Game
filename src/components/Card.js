@@ -1,8 +1,11 @@
 import './Card.css'
-const Kart = ({ kart, kartSec , donus}) => {
+const Kart = ({ kart, kartSec , donus, aktiflik}) => {
 
     const kartTiklandi=()=>{
         kartSec(kart)
+        if(!aktiflik){
+           kartSec(kart) 
+        }
     }
 
     return (

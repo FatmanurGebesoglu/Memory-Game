@@ -18,12 +18,14 @@ function App() {
   const [birinciSecilen, setBirinciSecilen] = useState([]);
   const [ikinciSecilen, setIkinciSecilen] = useState([]);
   const [secimSayisi, setSecimSayisi] = useState(0);
+  const [tiklamaAktiflik, setTiklamaAktiflik]= useState(true)
 
   const karistir = () => {
     const karistirilmiskartlar = [...kartResimler, ...kartResimler].sort(() =>
       Math.random() - 0.5).map((k) => ({ ...k, id: Math.random() }))
 
     setKartlar(karistirilmiskartlar)
+    setSecimSayisi(0)
   }
 
   const kartSec = (kart) => {
@@ -36,12 +38,14 @@ function App() {
     setBirinciSecilen(null);
     setIkinciSecilen(null);
     setSecimSayisi(oncekiSayi => oncekiSayi + 1);
+    setTiklamaAktiflik(false);
 
   }
 
   useEffect(() => {
 
     if (birinciSecilen && ikinciSecilen) {
+      setTiklamaAktiflik(true);
 
       if (birinciSecilen.src === ikinciSecilen.src) {
         setKartlar(oncekiKart => {
@@ -67,19 +71,18 @@ function App() {
 
   }, [birinciSecilen, ikinciSecilen])
 
+  useEffect(()=>{
+    karistir()
+  },[])
   return (
     <div className="App">
       <h1>MEMORY GAME</h1>
-      <button onClick={karistir}>
-        YENİ OYUN
-      </button>
-
       <div className='card-grid'>
         {kartlar.map(kart => (
-          <Kart key={kart.id} kart={kart} kartSec={kartSec} donus={kart===birinciSecilen || kart===ikinciSecilen || kart.eslesme} />
+          <Kart key={kart.id} kart={kart} kartSec={kartSec} donus={kart===birinciSecilen || kart===ikinciSecilen || kart.eslesme} aktiflik={tiklamaAktiflik} />
         ))}
       </div>
-
+          <p>Seçim Sayısı: {secimSayisi}</p>
     </div>
   );
 }
